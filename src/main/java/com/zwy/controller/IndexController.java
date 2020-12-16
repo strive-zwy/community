@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
  * @Author zwy
  * @Date 2020/12/13 16:35
  * @Version 1.0
- * @Deacription TODO
+ * @Description 首页
  **/
 
 @EnableAutoConfiguration
@@ -19,4 +19,11 @@ public class IndexController {
     public String index(){
         return "index";
     }
+
+    @GetMapping("/login")
+    public String login(){
+        return "login";
+    }
+
+
 }
