@@ -1,4 +1,4 @@
-package com.zwy.community;
+package com.zwy;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
