@@ -2,9 +2,9 @@ package com.zwy.controller;
 
 import com.zwy.dto.AccessTokenDTO;
 import com.zwy.dto.GithubUser;
-import com.zwy.mapper.UserMapper;
 import com.zwy.model.User;
 import com.zwy.provider.GithubProvider;
+import com.zwy.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -29,7 +29,7 @@ public class AuthorizeController {
     private GithubProvider githubProvider;
 
     @Autowired
-    private UserMapper userMapper;
+    private UserService userService;
 
     @Value("${github.client.id}")
     private String clientId;
@@ -40,10 +40,10 @@ public class AuthorizeController {
 
 
     @GetMapping("/callback")
-    public String callback(@RequestParam(name = "code")String code,
-                           @RequestParam(name = "state")String state,
+    public String callback(@RequestParam(name = "code") String code,
+                           @RequestParam(name = "state") String state,
                            HttpServletRequest request,
-                           HttpServletResponse response){
+                           HttpServletResponse response) {
         AccessTokenDTO accessTokenDTO = new AccessTokenDTO();
         accessTokenDTO.setClient_id(clientId);
         accessTokenDTO.setClient_secret(clientSecret);
@@ -51,9 +51,8 @@ public class AuthorizeController {
         accessTokenDTO.setRedirect_uri(redirectUri);
         accessTokenDTO.setState(state);
         String accessToken = githubProvider.getAccessToken(accessTokenDTO);
-        System.out.println(accessToken);
         GithubUser githubUser = githubProvider.getUser(accessToken);
-        if (githubUser == null){
+        if (githubUser == null) {
             //登录失败，重新登录
             return "redirect:/";
         }
@@ -64,8 +63,21 @@ public class AuthorizeController {
         user.setAccountId(String.valueOf(githubUser.getId()));
         user.setGmtCreate(System.currentTimeMillis());
         user.setGmtModified(user.getGmtCreate());
-        userMapper.insert(user);
-        response.addCookie(new Cookie("token",token));
+        user.setBio(githubUser.getBio());
+        user.setAvatarUrl(githubUser.getAvatar_url());
+        User u = userService.insertOrUpdate(user);
+        request.getSession().setAttribute("user", u);
+        response.addCookie(new Cookie("token", token));
         return "redirect:/";
+    }
+
+    @GetMapping("/logout")
+    public String callback(HttpServletRequest request,
+                           HttpServletResponse response) {
+    request.getSession().removeAttribute("user");
+    Cookie c = new Cookie("token",null);
+    c.setMaxAge(0);
+    response.addCookie(c);
+    return "redirect:/";
     }
 }

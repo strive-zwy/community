@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<!--suppress ALL-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>strive-社区</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/community.css">
+    <script src="/jq/jquery_1.10.2_jquery.js"></script>
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+</head>
+<body>
+<div th:replace="~{navigation :: nav}"></div>
+<div class="jumbotron">
+    <h1>出错啦！！！</h1>
+    <p th:text="${message}"></p>
+    <p><a class="btn btn-return btn-lg" href="/" role="button">回到主页</a></p>
+</div>
+</body>
+
+</html>

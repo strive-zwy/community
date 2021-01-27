@@ -4,11 +4,7 @@ package com.zwy.interceptor;
 import com.zwy.mapper.UserMapper;
 import com.zwy.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-import org.springframework.web.context.request.WebRequestInterceptor;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-import org.springframework.web.servlet.handler.WebRequestHandlerInterceptorAdapter;
+import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -20,8 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  * @Version ：1.0
  * @Description ：TODO
  **/
-@Service
-public class MyInterceptor extends HandlerInterceptorAdapter {
+public class MyInterceptor implements HandlerInterceptor {
 
     @Autowired
     private UserMapper userMapper;
@@ -36,10 +31,9 @@ public class MyInterceptor extends HandlerInterceptorAdapter {
                     String token = cookie.getValue();
                     User user = userMapper.findByToken(token);
                     if (user != null) {
+                        System.out.println("找到user");
                         request.getSession().setAttribute("user", user);
                         return true;
-                    }else{
-                        return false;
                     }
                 }
             }

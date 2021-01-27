@@ -3,7 +3,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>strive-社区</title>
+    <title th:text="${sectionName}"></title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="/css/community.css">
@@ -15,32 +15,32 @@
 <div class="container-fluid main">
     <div class="row">
         <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12 left_boder">
-            <h2><span class="glyphicon glyphicon-list faqi_pic" aria-hidden="true"></span>发起</h2>
+            <h2><span th:text="${sectionName}"></span></h2>
             <hr>
             <div th:replace="~{questionList :: questions}"></div>
 
             <nav aria-label="Page navigation" class="page-right">
                 <ul class="pagination">
                     <li th:if="${questionPage.showFirstPage}">
-                        <a th:href="@{/(page = 1)}">
+                        <a th:href="@{/profile/question/(page = 1)}">
                             <span aria-hidden="true">&lt;&lt;</span>
                         </a>
                     </li>
                     <li th:if="${questionPage.showPrevious}">
-                        <a th:href="@{/(page = ${questionPage.page} - 1)}">
+                        <a th:href="@{/profile/question/(page = ${questionPage.page} - 1)}">
                             <span aria-hidden="true">&lt;</span>
                         </a>
                     </li>
                     <li  th:each="page : ${questionPage.pages}" th:class="${questionPage.page == page}  ? 'active' : '' ">
-                        <a th:href="@{/(page = ${page})}" th:text="${page}"></a>
+                        <a th:href="@{/profile/question/(page = ${page})}" th:text="${page}"></a>
                     </li>
                     <li th:if="${questionPage.showNext}">
-                        <a th:href="@{/(page = ${questionPage.page} + 1)}">
+                        <a th:href="@{/profile/question/(page = ${questionPage.page} + 1)}">
                             <span aria-hidden="true">&gt;</span>
                         </a>
                     </li>
                     <li th:if="${questionPage.showEndPage}">
-                        <a th:href="@{/(page = ${questionPage.totlePage})}">
+                        <a th:href="@{/profile/question/(page = ${questionPage.totlePage})}">
                             <span aria-hidden="true">&gt;&gt;</span>
                         </a>
                     </li>
@@ -49,12 +49,14 @@
         </div>
 
         <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 hidden-xs hidden-sm">
-            <h3>热点话题</h3>
-
+            <div class="list-group my-list">
+                <a href="/profile/question"  th:class="${section == 'question'} ? 'list-group-item list-active' : 'list-group-item'">我的问题</a>
+                <a href="/profile/replies"  th:class="${section == 'replies'} ? 'list-group-item list-active' : 'list-group-item'">
+                    最新回复<span class="badge">14</span>
+                </a>
+            </div>
         </div>
     </div>
 </div>
-
 </body>
-
 </html>
