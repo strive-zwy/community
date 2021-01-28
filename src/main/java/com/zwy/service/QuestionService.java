@@ -88,4 +88,8 @@ public class QuestionService {
             throw new CustomizeException(CustomizeErrorCode.CREATE_OR_UPDATE_FAIOL);
         }
     }
+
+    public void addViewCount(Integer id) {
+        questionMapper.addViewCount(id);
+    }
 }

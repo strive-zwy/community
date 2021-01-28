@@ -52,7 +52,7 @@ public class JavaConfigGen {
         GeneratedKey generatedKey = new GeneratedKey("id", "MySql", false, "pre");
 
         TableConfiguration t1 = new TableConfiguration(context);
-        t1.setTableName("userExample");
+        t1.setTableName("comment");
         context.addTableConfiguration(t1);
         t1.setGeneratedKey(generatedKey);
 
