@@ -7,9 +7,15 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="/css/community.css">
+    <script src="/js/community.js"></script>
     <script src="/jq/jquery_1.10.2_jquery.js"></script>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
 </head>
+<script th:inline="javascript">
+    function changeIn() {
+        var inddd= [[${inddd}]];
+    }
+</script>
 <body>
 <div th:replace="~{navigation :: nav}"></div>
 <div class="container-fluid main">
@@ -31,9 +37,102 @@
             <div class="question-dec col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-xs hidden-sm">
                 <span th:text="${question.description}"></span>
             </div>
+            <hr style="width: 100%;">
+            <span th:each="tag : ${question.tag.split('、')}">
+                <span class="label label-info">
+                    <span class="glyphicon glyphicon-tag"></span>
+                    <span th:text="${tag}"></span>
+                </span>
+                &nbsp;&nbsp;
+            </span>
             <br>
             <hr>
+            <!--回复-->
+            <h4 style="margin: 20px 0">
+                <span th:text="${question.commentCount}"></span>&nbsp;&nbsp;个回复
+            </h4>
+            <div th:each="comm , c : ${commList}" class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="media" th:if="${comm.user != null }">
+                    <div class="media-left">
+                        <img class="media-object comm_pic img-rounded"
+                             th:src="${comm.user.avatarUrl}">
+                    </div>
+                    <div class="media-body">
+                        <h5 class="media-heading" th:text="${comm.user.name}"></h5>
+                        <span th:text="${comm.content}"></span>
+                        <br>
+                        <div class="comm_font">
+                            <span onclick="like(/${comm.id}/)" th:id="${comm.id}+'_icon_left'" class="comm_icon_left comm_icon glyphicon glyphicon-thumbs-up">
+                                <span class="comm_badge" th:text="${comm.likeCount}"></span>
+                            </span><span value="show"  th:onclick="'javascript:isShow('+${comm.id}+');'" th:id="${comm.id}+'_icon_right'" class="comm_icon_right comm_icon glyphicon glyphicon-comment">
+                            <span class="comm_badge" th:text="${comm.commList.size}"></span>
+                        </span>
+                            <span class="pull-right" th:text="${#dates.format(comm.gmtCreate,'yyyy-MM-dd')}"></span>
+                        </div>
+                        <div th:id="${comm.id}+'_show'" hidden>
+                            <br>
+                            <textarea th:id="${comm.id}+'comm_content_id'" class="form-control" rows="1"></textarea>
+                            <br>
+                            <button type="submit" th:onclick="'javascript:postComm('+${comm.id}+',2);'" class="btn btn-success">回&nbsp;&nbsp;复</button>
+                            <div th:each="commSon :${comm.commList}" class="">
+                                <br>
+                                <hr>
+                                <div class="media-left">
+                                    <img class="media-object comm_pic img-rounded"
+                                         th:src="${commSon.user.avatarUrl}">
+                                </div>
+                                <div class="media-right">
+                                    <h6 class="media-heading" th:text="${commSon.user.name}"></h6>
+                                    <span th:text="${commSon.content}"></span>
+                                    <br>
+                                </div>
+                                <div class="comm_font">
+                            <span onclick="like(/${commSon.id}/)" class="comm_comm_like comm_icon glyphicon glyphicon-thumbs-up">
+                                <span class="comm_comm_badge" th:text="${commSon.likeCount}"></span>
+                            </span>
+                                    <span class="pull-right" th:text="${#dates.format(commSon.gmtCreate,'yyyy-MM-dd')}"></span>
+                                </div>
+                            </div>
+                        </div>
 
+                    </div>
+                    <br>
+                    <hr>
+                </div>
+            </div>
+<!--            <span id="changeIn" onclick="changeIn()">显示更多</span>-->
+            <br>
+            <br>
+            <hr>
+            <!--回复输入框-->
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="comment_section">
+                <h3>提交回复</h3>
+                <br>
+                <div th:if="${session.user != null}">
+                    <div class="media-left">
+                        <img class="media-object comm_pic img-rounded"
+                             th:src="${session.user.avatarUrl}">
+                    </div>
+                    <div class="media-right media-span">
+                        <h4 class="media-heading" th:text="${session.user.name}"></h4>
+                    </div>
+                </div>
+                <div th:if="${session.user == null}">
+                    <div class="media-left">
+                        <img class="media-object comm_pic img-rounded">
+                    </div>
+                    <div class="media-right media-span">
+                        <h4 class="media-heading">匿名用户</h4>
+                    </div>
+                </div>
+                <br>
+                <textarea id="content_id" class="form-control" rows="4"></textarea>
+                <br>
+                <br>
+                <div class="btn-publish">
+                    <button type="submit" th:onclick="'javascript:postComm('+${question.id}+',1);'" class="btn btn-success">回&nbsp;&nbsp;复</button>
+                </div>
+            </div>
         </div>
 
         <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 hidden-xs hidden-sm">
@@ -51,9 +150,16 @@
             <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-xs hidden-sm">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-xs hidden-sm">
                 <h3>相关问题</h3>
+                <br>
+                <div class="media"  th:each="qq : ${likeQlist}">
+                    <a class="likeList" th:href="@{'/question/' + ${qq.id}} ">
+                        · <span th:text="${qq.title}"></span>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 </div>
 </body>
+
 </html>

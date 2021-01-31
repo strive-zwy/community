@@ -30,7 +30,7 @@ public class QuestionService {
     private QuestionMapper questionMapper;
 
 
-    public PageDTO<QuestionDTO> list(Integer page, Integer size , Integer userId) {
+    public PageDTO<QuestionDTO> list(Integer page, Integer size , Long userId) {
         Integer offset = size * (page - 1);
         List<Question> list;
         Integer totleCount;
@@ -55,7 +55,7 @@ public class QuestionService {
         return questionDTOPageDTO;
     }
 
-    public QuestionDTO findById(Integer id) {
+    public QuestionDTO findById(Long id) {
         Question question = questionMapper.findById(id);
         if (question == null){
             throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
@@ -67,7 +67,7 @@ public class QuestionService {
         return dto;
     }
 
-    public Question findQueById(Integer id) {
+    public Question findQueById(Long id) {
         Question question = questionMapper.findById(id);
         if (question == null){
             throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
@@ -89,7 +89,25 @@ public class QuestionService {
         }
     }
 
-    public void addViewCount(Integer id) {
+    public void addViewCount(Long id) {
         questionMapper.addViewCount(id);
+    }
+
+    public void addCommentCount(Long id) {
+        questionMapper.addCommentCount(id);
+    }
+
+    public List<QuestionDTO> findLikeList(Long id,String tag) {
+        String tags = tag.replace("、","|");
+        List<Question> list = questionMapper.findLikeList(id,tags);
+        List<QuestionDTO> questionDTOS = new ArrayList<>();
+        for (Question q : list ) {
+            QuestionDTO questionDTO = new QuestionDTO();
+            User user = userMapper.findById(q.getCreator());
+            BeanUtils.copyProperties(q,questionDTO);
+            questionDTO.setUser(user);
+            questionDTOS.add(questionDTO);
+        }
+        return questionDTOS;
     }
 }

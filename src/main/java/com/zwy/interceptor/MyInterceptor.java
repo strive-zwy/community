@@ -31,7 +31,6 @@ public class MyInterceptor implements HandlerInterceptor {
                     String token = cookie.getValue();
                     User user = userMapper.findByToken(token);
                     if (user != null) {
-                        System.out.println("找到user");
                         request.getSession().setAttribute("user", user);
                         return true;
                     }

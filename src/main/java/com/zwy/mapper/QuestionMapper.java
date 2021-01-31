@@ -17,22 +17,28 @@ public interface QuestionMapper {
     List<Question> list(@Param(value = "offset") Integer offset, @Param(value = "size") Integer size);
 
     @Select("select * from question where creator = #{userId} limit #{offset},#{size} ")
-    List<Question> listByCreator(@Param(value = "userId") Integer userId,
+    List<Question> listByCreator(@Param(value = "userId") Long userId,
                                  @Param(value = "offset") Integer offset, @Param(value = "size") Integer size);
 
     @Select("select count(1) from question")
     Integer count();
 
     @Select("select count(1) from question where creator = #{userId}")
-    Integer countByCreator(Integer userId);
+    Integer countByCreator(Long userId);
 
     @Select("select * from question where id = #{id} ")
-    Question findById(Integer id);
+    Question findById(Long id);
 
     @Update("update question set title = #{title},description = #{description},tag = #{tag}," +
             "gmt_modified = #{gmtModified} where  id = #{id}")
     int update(Question q);
 
     @Update("update question set view_Count = view_Count + 1 where  id = #{id}")
-    void addViewCount(Integer id);
+    void addViewCount(Long id);
+
+    @Update("update question set comment_Count = comment_Count + 1 where  id = #{id}")
+    void addCommentCount(Long id);
+
+    @Select("select * from question WHERE tag REGEXP #{tags} AND id != #{id} ")
+    List<Question> findLikeList(Long id,String tags);
 }

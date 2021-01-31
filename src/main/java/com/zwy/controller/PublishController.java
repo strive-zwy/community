@@ -26,7 +26,7 @@ public class PublishController {
     private QuestionService questionService;
 
     @GetMapping("/publish/{id}")
-    private String publish(@PathVariable(value = "id") Integer id,
+    private String publish(@PathVariable(value = "id") Long id,
                            Model model) {
         if (id != null && id != 0){
             Question q = questionService.findQueById(id);
@@ -40,7 +40,7 @@ public class PublishController {
 
     @PostMapping("/doPublish/{id}")
     private String doPublish(
-            @PathVariable(value = "id") Integer id,
+            @PathVariable(value = "id") Long id,
             @RequestParam(value = "title", required = false) String title,
             @RequestParam(value = "description", required = false) String description,
             @RequestParam(value = "tag", required = false) String tag,

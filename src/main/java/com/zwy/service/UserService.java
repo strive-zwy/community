@@ -31,4 +31,8 @@ public class UserService {
             return u;
         }
     }
+
+    public User findById(Long commentator) {
+        return userMapper.findById(commentator);
+    }
 }

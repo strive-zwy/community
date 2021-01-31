@@ -30,7 +30,7 @@ public class IndexController {
     public String index(HttpServletRequest request, Model model,
                         @RequestParam(name = "page" , defaultValue = "1") Integer page,
                         @RequestParam(name = "size" , defaultValue = "5") Integer size) {
-        PageDTO<QuestionDTO> questionPage = questionService.list(page,size,0);
+        PageDTO<QuestionDTO> questionPage = questionService.list(page,size,0L);
         model.addAttribute("questionPage",questionPage);
         return "index";
     }
