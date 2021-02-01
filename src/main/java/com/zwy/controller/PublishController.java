@@ -1,8 +1,12 @@
 package com.zwy.controller;
 
+import com.zwy.cache.TagCache;
 import com.zwy.model.Question;
+import com.zwy.model.Tag;
 import com.zwy.model.User;
 import com.zwy.service.QuestionService;
+import com.zwy.service.TagService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @Author ：zwy
@@ -24,6 +29,8 @@ public class PublishController {
 
     @Autowired
     private QuestionService questionService;
+    @Autowired
+    private TagService tagService;
 
     @GetMapping("/publish/{id}")
     private String publish(@PathVariable(value = "id") Long id,
@@ -35,6 +42,7 @@ public class PublishController {
             model.addAttribute("tag",q.getTag());
             model.addAttribute("id",id);
         }
+        model.addAttribute("tagList", TagCache.get());
         return "/publish";
     }
 
@@ -48,6 +56,7 @@ public class PublishController {
         model.addAttribute("title",title);
         model.addAttribute("description",description);
         model.addAttribute("tag",tag);
+        model.addAttribute("tagList", TagCache.get());
         if (title == null || "".equals(title)) {
             model.addAttribute("error", "问题标题不能为空！");
             return "publish";
@@ -58,6 +67,11 @@ public class PublishController {
         }
         if (tag == null || "".equals(tag)) {
             model.addAttribute("error", "问题标签不能为空！");
+            return "publish";
+        }
+        String invalid = TagCache.filterInvalid(tag);
+        if (StringUtils.isNotBlank(invalid)){
+            model.addAttribute("error", "输入非法标签");
             return "publish";
         }
         User user = (User) request.getSession().getAttribute("user");

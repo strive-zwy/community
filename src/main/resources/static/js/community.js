@@ -42,7 +42,8 @@ function postComm(questionId,type) {
     });
 }
 
-function like(id) {
+function like(cId) {
+    console.log(cId);
 
 }
 
@@ -57,4 +58,25 @@ function isShow(commId) {
     }
 }
 
+function showTagList() {
+    $("#tag_list").show();
+}
 
+function hideTagList() {
+    $("#tag_list").hide();
+}
+
+function addTag(newTag) {
+    var tagValue = $("#tag").val();
+    var tags = tagValue.split("、");
+    if (tagValue){
+        for (var i = 0; i < tags.length;i++){
+            if (tags[i] === newTag){
+                return;
+            }
+        }
+        $("#tag").val(tagValue + "、" + newTag);
+    }else{
+        $("#tag").val(newTag);
+    }
+}

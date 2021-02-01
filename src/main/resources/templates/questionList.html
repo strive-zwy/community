@@ -4,7 +4,7 @@
 <body>
 <div th:fragment="questions">
     <div class="media"  th:each="question : ${questionPage.list}">
-        <a th:href="@{'/question/' + ${question.id}} ">
+        <a th:href="@{'/question/' + ${question.id} + '/0'} ">
             <div class="media-left">
                 <img class="media-object list_pic img-thumbnail"
                      th:src="${question.user.avatarUrl}">

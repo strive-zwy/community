@@ -13,7 +13,7 @@ public interface QuestionMapper {
             "#{creator}, #{tag}  )")
     int create(Question question);
 
-    @Select("select * from question limit #{offset},#{size} ")
+    @Select("select * from question order by  gmt_create desc limit #{offset},#{size} ")
     List<Question> list(@Param(value = "offset") Integer offset, @Param(value = "size") Integer size);
 
     @Select("select * from question where creator = #{userId} limit #{offset},#{size} ")
@@ -39,6 +39,10 @@ public interface QuestionMapper {
     @Update("update question set comment_Count = comment_Count + 1 where  id = #{id}")
     void addCommentCount(Long id);
 
-    @Select("select * from question WHERE tag REGEXP #{tags} AND id != #{id} ")
+    @Select("select * from question WHERE tag REGEXP #{tags} AND id != #{id} order by  " +
+            "comment_Count desc limit 8")
     List<Question> findLikeList(Long id,String tags);
+
+    @Select("select * from question order by  comment_Count desc limit 8")
+    List<Question> findHotList();
 }

@@ -3,6 +3,7 @@ package com.zwy.interceptor;
 
 import com.zwy.mapper.UserMapper;
 import com.zwy.model.User;
+import com.zwy.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -20,6 +21,8 @@ public class MyInterceptor implements HandlerInterceptor {
 
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private NotificationService notificationService;
 
     @Override
     public boolean preHandle(HttpServletRequest request,
@@ -32,6 +35,8 @@ public class MyInterceptor implements HandlerInterceptor {
                     User user = userMapper.findByToken(token);
                     if (user != null) {
                         request.getSession().setAttribute("user", user);
+                        Integer unReadCount = notificationService.countUnRead(user.getId());
+                        request.getSession().setAttribute("unReadCount",unReadCount);
                         return true;
                     }
                 }

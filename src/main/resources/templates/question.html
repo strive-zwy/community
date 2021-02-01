@@ -87,7 +87,7 @@
                                     <br>
                                 </div>
                                 <div class="comm_font">
-                            <span onclick="like(/${commSon.id}/)" class="comm_comm_like comm_icon glyphicon glyphicon-thumbs-up">
+                            <span onclick="like();" class="comm_comm_like comm_icon glyphicon glyphicon-thumbs-up">
                                 <span class="comm_comm_badge" th:text="${commSon.likeCount}"></span>
                             </span>
                                     <span class="pull-right" th:text="${#dates.format(commSon.gmtCreate,'yyyy-MM-dd')}"></span>
@@ -152,7 +152,7 @@
                 <h3>相关问题</h3>
                 <br>
                 <div class="media"  th:each="qq : ${likeQlist}">
-                    <a class="likeList" th:href="@{'/question/' + ${qq.id}} ">
+                    <a class="likeList" th:href="@{'/question/' + ${qq.id} + '/0'} ">
                         · <span th:text="${qq.title}"></span>
                     </a>
                 </div>

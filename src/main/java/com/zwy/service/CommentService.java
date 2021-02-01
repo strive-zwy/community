@@ -3,10 +3,14 @@ package com.zwy.service;
 import com.zwy.dto.CommentCreateDTO;
 import com.zwy.dto.CommentDTO;
 import com.zwy.enums.CommentTyEnum;
+import com.zwy.enums.NotificationStatusEnum;
+import com.zwy.enums.NotificationTypeEnum;
 import com.zwy.exception.CustomizeErrorCode;
 import com.zwy.exception.CustomizeException;
 import com.zwy.mapper.CommentMapper;
+import com.zwy.mapper.NotificationMapper;
 import com.zwy.model.Comment;
+import com.zwy.model.Notification;
 import com.zwy.model.Question;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +35,8 @@ public class CommentService {
     private QuestionService questionService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private NotificationMapper notificationMapper;
 
     @Transactional
     public void insert(CommentCreateDTO commentCreateDTO, Long id) {
@@ -53,13 +59,28 @@ public class CommentService {
             Comment c = commentMapper.selectByPrimaryKey(commentCreateDTO.getParentId());
             if (c == null)  throw new CustomizeException(CustomizeErrorCode.COMMENT_NOT_FOUND);
             commentMapper.insert(comment);
+            //创建通知
+            createNotify(comment, c.getCommentator(), NotificationTypeEnum.REPLY_COMMENT.getType());
         }else {
             // 回复问题
             Question question = questionService.findQueById(commentCreateDTO.getParentId());
             if (question == null) throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
             commentMapper.insert(comment);
             questionService.addCommentCount(question.getId());
+            //创建通知
+            createNotify(comment, question.getCreator(), NotificationTypeEnum.REPLY_QUESTION.getType());
         }
+    }
+
+    private void createNotify(Comment comment, Long receiver, int replyCommentType) {
+        Notification n = new Notification();
+        n.setGmtCreate(System.currentTimeMillis());
+        n.setType(replyCommentType);
+        n.setOuterid(comment.getParentId());
+        n.setNotifier(comment.getCommentator());
+        n.setStatus(NotificationStatusEnum.UNREAD.getStatus());
+        n.setReceiver(receiver);
+        notificationMapper.insert(n);
     }
 
     public List<CommentDTO> getCommList(Long qId) {

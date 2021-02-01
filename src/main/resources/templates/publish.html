@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="/css/community.css">
     <script src="/jq/jquery_1.10.2_jquery.js"></script>
+    <script src="/js/community.js"></script>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
 </head>
 <body>
@@ -17,26 +18,50 @@
         <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
             <h2><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>发起</h2>
             <hr>
-            <form th:action="${id == null} ? '/doPublish/0' : '/doPublish/0'+${id} "  method="post">
+            <form th:action="${id == null} ? '/doPublish/0' : '/doPublish/'+${id} "  method="post">
                 <div class="form-group">
                     <label for="title">问题标题</label>
-                    <!--/*@thymesVar id="title" type="java"*/-->
                     <input type="text" class="form-control" id="title" name="title" placeholder="问题标题......"
-                           th:value="${title}">
+                           autocomplete="off" th:value="${title}">
                 </div>
                 <div class="form-group">
                     <label for="description">问题补充</label>
                     <textarea class="form-control" id="description" name="description" cols="30" rows="10"
-                              th:text="${description}"></textarea>
+                              autocomplete="off" th:text="${description}"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="tag">添加标签</label>
                     <input class="form-control" id="tag" name="tag" cols="30" rows="10" th:value="${tag}"
-                           placeholder="输入标题，以 '、' 隔开">
+                           autocomplete="off" placeholder="输入标题，以 '、' 隔开"  onfocus="showTagList()">
+                    <br>
+                    <div id="tag_list" hidden>
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" th:class="${g.index == 0 ? 'active' : ''}" th:each="tt , g: ${tagList}">
+                                <a th:href="'#'+${tt.idName}" aria-controls="home" role="tab" data-toggle="tab"
+                                th:text="${tt.categoryName}">
+                                </a>
+                            </li>
+                        </ul>
+                        <br>
+                        <div class="tab-content">
+                            <div role="tabpanel" th:class="${d.index == 0 ? 'active tab-pane' : 'tab-pane'}" th:each="tt ,d : ${tagList}" th:id="${tt.idName}">
+                                <span th:each="tttt, g : ${tt.tags}">
+                                    <span  class="label label-info tag_list_sty" >
+                                        <span class="glyphicon glyphicon-tag"></span>
+                                        <span th:id="${g.index} + '_ttag'" th:value="${tttt}" th:text="${tttt}" th:onclick="addTag([[${tttt}]])" ></span>
+                                    </span>
+                                    &nbsp;&nbsp;
+                                    <br th:if="${(g.index+1) % 8 == 0 && g.index != 0}">
+                                    <br th:if="${(g.index+1) % 8 == 0 && g.index != 0}">
+                                </span>
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
                 <div class="container-fluid main">
                     <div class="row">
-                        <!--/*@thymesVar id="error" type="java"*/-->
                         <div class="alert alert-danger col-lg-9 col-md-12 col-sm-12 col-xs-12" th:text="${error}"
                              th:if="${error != null}">
                         </div>

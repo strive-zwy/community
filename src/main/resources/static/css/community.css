@@ -128,3 +128,6 @@ a.list-active{
     font-size: 22px;
     color: #8f8f8f;
 }
+.tag_list_sty{
+    cursor: pointer;
+}

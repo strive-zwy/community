@@ -110,4 +110,8 @@ public class QuestionService {
         }
         return questionDTOS;
     }
+
+    public List<Question> findHotList() {
+        return questionMapper.findHotList();
+    }
 }

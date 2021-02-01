@@ -14,7 +14,48 @@
 <div th:replace="~{navigation :: nav}"></div>
 <div class="container-fluid main">
     <div class="row">
-        <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12 left_boder">
+        <div th:if="${section == 'replies'}" class="col-lg-8 col-md-12 col-sm-12 col-xs-12 left_boder">
+            <h2><span th:text="${sectionName}"></span></h2>
+            <hr>
+            <div class="media"  th:each="nn : ${notificationPage.list}">
+                <span style="color: #2aabd2" th:text="${nn.notifierName}"></span> &nbsp;&nbsp;
+                <span th:text="${nn.type}"></span>&nbsp;&nbsp;
+                <a th:href="@{'/question/' + ${nn.outerId} + '/'+ ${nn.id}} ">
+                    <span style="color: #2aabd2" th:text="${nn.outerTile}"></span>
+                    <span th:if="${nn.status == 0}" class="label label-danger">未读</span>
+                </a>
+                <span class="pull-right" th:text="${#dates.format(nn.gmtCreate,'yyyy-MM-dd')}"></span>
+                <hr class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            </div>
+            <nav aria-label="Page navigation" class="page-right">
+                <ul class="pagination">
+                    <li th:if="${notificationPage.showFirstPage}">
+                        <a th:href="@{/profile/replies/(page = 1)}">
+                            <span aria-hidden="true">&lt;&lt;</span>
+                        </a>
+                    </li>
+                    <li th:if="${notificationPage.showPrevious}">
+                        <a th:href="@{/profile/replies/(page = ${notificationPage.page} - 1)}">
+                            <span aria-hidden="true">&lt;</span>
+                        </a>
+                    </li>
+                    <li  th:each="page : ${notificationPage.pages}" th:class="${notificationPage.page == page}  ? 'active' : '' ">
+                        <a th:href="@{/profile/replies/(page = ${page})}" th:text="${page}"></a>
+                    </li>
+                    <li th:if="${notificationPage.showNext}">
+                        <a th:href="@{/profile/replies/(page = ${notificationPage.page} + 1)}">
+                            <span aria-hidden="true">&gt;</span>
+                        </a>
+                    </li>
+                    <li th:if="${notificationPage.showEndPage}">
+                        <a th:href="@{/profile/replies/(page = ${notificationPage.totlePage})}">
+                            <span aria-hidden="true">&gt;&gt;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div th:if="${section == 'question'}" class="col-lg-8 col-md-12 col-sm-12 col-xs-12 left_boder">
             <h2><span th:text="${sectionName}"></span></h2>
             <hr>
             <div th:replace="~{questionList :: questions}"></div>
@@ -52,7 +93,7 @@
             <div class="list-group my-list">
                 <a href="/profile/question"  th:class="${section == 'question'} ? 'list-group-item list-active' : 'list-group-item'">我的问题</a>
                 <a href="/profile/replies"  th:class="${section == 'replies'} ? 'list-group-item list-active' : 'list-group-item'">
-                    最新回复<span class="badge">14</span>
+                    最新回复<span class="badge" th:if="${session.unReadCount > 0}" th:text="${session.unReadCount}"></span>
                 </a>
             </div>
         </div>

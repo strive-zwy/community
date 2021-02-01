@@ -57,9 +57,14 @@
             </nav>
         </div>
 
-        <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 hidden-xs hidden-sm">
+        <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 hidden-xs hidde  n-sm">
             <h3>热点话题</h3>
-
+            <br>
+            <div class="media"  th:each="qq : ${hotList}">
+                <a class="likeList" th:href="@{'/question/' + ${qq.id} +'/0'} ">
+                    · <span th:text="${qq.title}"></span>
+                </a>
+            </div>
         </div>
     </div>
 </div>
