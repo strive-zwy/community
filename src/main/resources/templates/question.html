@@ -7,8 +7,12 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="/css/community.css">
-    <script src="/js/community.js"></script>
+    <link rel="stylesheet" href="/css/editormd.preview.min.css">
     <script src="/jq/jquery_1.10.2_jquery.js"></script>
+    <script src="/js/community.js"></script>
+    <script src="/js/editormd.min.js"></script>
+    <script src="/js/lib/marked.min.js"></script>
+    <script src="/js/lib/prettify.min.js"></script>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
 </head>
 <script th:inline="javascript">
@@ -34,9 +38,16 @@
                 阅读数：<span th:text="${question.viewCount}"></span>
             </span>
             <hr>
-            <div class="question-dec col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-xs hidden-sm">
-                <span th:text="${question.description}"></span>
+            <!--内容-->
+            <div id="question-view" class="question-dec col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-xs hidden-sm">
+                <textarea th:text="${question.description}" style="display:none;"></textarea>
             </div>
+            <script type="text/javascript">
+                $(function() {
+                    editormd.markdownToHTML("question-view", { });
+                });
+            </script>
+
             <hr style="width: 100%;">
             <span th:each="tag : ${question.tag.split('、')}">
                 <span class="label label-info">
@@ -119,7 +130,7 @@
                 </div>
                 <div th:if="${session.user == null}">
                     <div class="media-left">
-                        <img class="media-object comm_pic img-rounded">
+                        <img src="/images/userIcon.png" class="media-object comm_pic img-rounded">
                     </div>
                     <div class="media-right media-span">
                         <h4 class="media-heading">匿名用户</h4>

@@ -86,7 +86,7 @@ public class PublishController {
             q.setTag(tag);
             q.setGmtModified(System.currentTimeMillis());
             questionService.update(q);
-            return "redirect:/question/"+id;
+            return "redirect:/question/"+id+"/0";
         }
         Question question = new Question();
         question.setTitle(title);

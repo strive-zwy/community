@@ -53,10 +53,9 @@ a.list-active{
 .text-desc{
     color: #ababab;
 }
-.question-dec{
+/*.question-dec{
     font-size: 18px;
-    margin: 20px 0;
-}
+}*/
 .jumbotron{
     margin: 50px;
     text-align:center;

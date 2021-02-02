@@ -16,7 +16,7 @@ public interface QuestionMapper {
     @Select("select * from question order by  gmt_create desc limit #{offset},#{size} ")
     List<Question> list(@Param(value = "offset") Integer offset, @Param(value = "size") Integer size);
 
-    @Select("select * from question where creator = #{userId} limit #{offset},#{size} ")
+    @Select("select * from question where creator = #{userId}  order by  gmt_create desc  limit #{offset},#{size} ")
     List<Question> listByCreator(@Param(value = "userId") Long userId,
                                  @Param(value = "offset") Integer offset, @Param(value = "size") Integer size);
 
