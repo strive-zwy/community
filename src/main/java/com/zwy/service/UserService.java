@@ -23,8 +23,6 @@ public class UserService {
             userMapper.insert(user);
             return user;
         }else {
-//            System.out.println(u.getGmtModified());
-//            System.out.println(u.getToken());
             u.setGmtModified(System.currentTimeMillis());
             u.setToken(user.getToken());
             userMapper.update(u);
@@ -34,5 +32,9 @@ public class UserService {
 
     public User findById(Long commentator) {
         return userMapper.findById(commentator);
+    }
+
+    public User findByAccoundId(String id) {
+        return userMapper.findByAccount(id);
     }
 }

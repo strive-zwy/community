@@ -57,7 +57,13 @@ public class AuthorizeController {
             return "redirect:/";
         }
         User user = new User();
-        String token = UUID.randomUUID().toString();
+        User pastU = userService.findByAccoundId(String.valueOf(githubUser.getId()));
+        String token;
+        if (pastU != null){
+            token = pastU.getToken();
+        }else{
+            token = UUID.randomUUID().toString();
+        }
         user.setToken(token);
         user.setName(githubUser.getName());
         user.setAccountId(String.valueOf(githubUser.getId()));
