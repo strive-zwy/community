@@ -11,15 +11,6 @@
     <script src="/jq/jquery_1.10.2_jquery.js"></script>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
 </head>
-<script type="application/javascript">
-    window.onload = function () {
-        var closable = window.localStorage.getItem("closable");
-        if (closable == "true"){
-            window.close();
-            window.localStorage.removeItem("closable");
-        }
-    }
-</script>
 <body>
 <div th:replace="~{navigation :: nav}"></div>
 <div class="container-fluid main">
@@ -32,20 +23,20 @@
             <nav aria-label="Page navigation" class="page-right">
                 <ul class="pagination">
                     <li th:if="${questionPage.showFirstPage}">
-                        <a th:href="@{/(page = 1)}">
+                        <a th:href="@{/(page = 1,search =${searchkw} )}">
                             <span aria-hidden="true">&lt;&lt;</span>
                         </a>
                     </li>
                     <li th:if="${questionPage.showPrevious}">
-                        <a th:href="@{/(page = ${questionPage.page} - 1)}">
+                        <a th:href="@{/(page = ${questionPage.page} - 1,search =${searchkw})}">
                             <span aria-hidden="true">&lt;</span>
                         </a>
                     </li>
                     <li  th:each="page : ${questionPage.pages}" th:class="${questionPage.page == page}  ? 'active' : '' ">
-                        <a th:href="@{/(page = ${page})}" th:text="${page}"></a>
+                        <a th:href="@{/(page = ${page},search =${searchkw})}" th:text="${page}"></a>
                     </li>
                     <li th:if="${questionPage.showNext}">
-                        <a th:href="@{/(page = ${questionPage.page} + 1)}">
+                        <a th:href="@{/(page = ${questionPage.page} + 1,search =${searchkw})}">
                             <span aria-hidden="true">&gt;</span>
                         </a>
                     </li>

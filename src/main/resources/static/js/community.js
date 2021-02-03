@@ -80,3 +80,4 @@ function addTag(newTag) {
         $("#tag").val(newTag);
     }
 }
+

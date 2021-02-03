@@ -1,5 +1,6 @@
 package com.zwy.mapper;
 
+import com.zwy.dto.SearchDTO;
 import com.zwy.model.Question;
 import org.apache.ibatis.annotations.*;
 
@@ -45,4 +46,11 @@ public interface QuestionMapper {
 
     @Select("select * from question order by  comment_Count desc limit 8")
     List<Question> findHotList();
+
+    @Select("select * from question WHERE title like '%${search}%' or description like '%${search}%' " +
+            "order by comment_Count desc limit #{offset},#{size}")
+    List<Question> searchList(SearchDTO searchDTO);
+
+    @Select("select count(1) from question WHERE title like '%${_parameter}%' or description like '%${_parameter}%' ")
+    Integer searchCount(String search);
 }

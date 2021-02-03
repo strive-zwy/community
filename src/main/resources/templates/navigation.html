@@ -13,13 +13,13 @@
                 <a class="navbar-brand" href="/">strive-zwy 社区</a>
             </div>
 
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <form class="navbar-form navbar-left">
+            <form action="/" class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <div  class="navbar-form navbar-left" id="searchForm">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="搜索问题">
+                        <input type="text" class="form-control" name="search" placeholder="搜索问题">
                     </div>
-                    <button type="submit" class="btn btn-default">搜索</button>
-                </form>
+                    <button type="submit"  class="btn btn-default">搜索</button>
+                </div>
                 <ul class="nav navbar-nav navbar-right">
                     <li th:if="${session.user != null}">
                         <a class="nav-li" href="/publish/0"><span>发布</span></a>
@@ -45,7 +45,7 @@
                 &redirect_uri=http://localhost:8080/callback&scope=user&state=1">登 录</a>
                     </li>
                 </ul>
-            </div>
+            </form>
         </div>
     </nav>
 </div>

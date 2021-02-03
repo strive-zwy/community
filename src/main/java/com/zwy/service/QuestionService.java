@@ -2,12 +2,14 @@ package com.zwy.service;
 
 import com.zwy.dto.PageDTO;
 import com.zwy.dto.QuestionDTO;
+import com.zwy.dto.SearchDTO;
 import com.zwy.exception.CustomizeErrorCode;
 import com.zwy.exception.CustomizeException;
 import com.zwy.mapper.QuestionMapper;
 import com.zwy.mapper.UserMapper;
 import com.zwy.model.Question;
 import com.zwy.model.User;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,13 +32,22 @@ public class QuestionService {
     private QuestionMapper questionMapper;
 
 
-    public PageDTO<QuestionDTO> list(Integer page, Integer size , Long userId) {
+    public PageDTO<QuestionDTO> list(String search, Integer page, Integer size , Long userId) {
         Integer offset = size * (page - 1);
         List<Question> list;
         Integer totleCount;
         if (userId == 0){
-            list = questionMapper.list(offset,size);
-            totleCount = questionMapper.count();
+            if (StringUtils.isNotBlank(search)){
+                totleCount = questionMapper.searchCount(search);
+                SearchDTO searchDTO = new SearchDTO();
+                searchDTO.setOffset(offset);
+                searchDTO.setSearch(search);
+                searchDTO.setSize(size);
+                list = questionMapper.searchList(searchDTO);
+            }else{
+                list = questionMapper.list(offset,size);
+                totleCount = questionMapper.count();
+            }
         }else{
             list = questionMapper.listByCreator(userId,offset,size);
             totleCount = questionMapper.countByCreator(userId);
