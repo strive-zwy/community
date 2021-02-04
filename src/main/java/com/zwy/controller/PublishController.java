@@ -1,13 +1,8 @@
 package com.zwy.controller;
 
-import com.aliyun.oss.OSS;
-import com.aliyun.oss.OSSClientBuilder;
-import com.aliyun.oss.model.PutObjectRequest;
 import com.zwy.cache.TagCache;
 import com.zwy.config.OSSClientUtil;
-import com.zwy.dto.FileDTO;
 import com.zwy.model.Question;
-import com.zwy.model.Tag;
 import com.zwy.model.User;
 import com.zwy.service.QuestionService;
 import com.zwy.service.TagService;
@@ -21,7 +16,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
