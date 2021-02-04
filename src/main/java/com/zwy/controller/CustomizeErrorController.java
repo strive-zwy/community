@@ -18,7 +18,7 @@ import java.util.Map;
  * @Author ：zwy
  * @Date ：2021/1/27 17:50
  * @Version ：1.0
- * @Description ：TODO
+ * @Description ：异常
  **/
 @Controller
 @RequestMapping("${server.error.path:"+"${error.paht:/error}}")

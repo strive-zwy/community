@@ -5,6 +5,7 @@ import com.zwy.dto.GithubUser;
 import com.zwy.model.User;
 import com.zwy.provider.GithubProvider;
 import com.zwy.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -20,9 +21,10 @@ import java.util.UUID;
  * @Author ：zwy
  * @Date ：2021/1/19 12:44
  * @Version ：1.0
- * @Description ：TODO
+ * @Description ：GitHub 登录验证
  **/
 @Controller
+@Slf4j
 public class AuthorizeController {
 
     @Autowired
@@ -53,6 +55,7 @@ public class AuthorizeController {
         String accessToken = githubProvider.getAccessToken(accessTokenDTO);
         GithubUser githubUser = githubProvider.getUser(accessToken);
         if (githubUser == null) {
+            log.error("callback get github error {}",githubUser );
             //登录失败，重新登录
             return "redirect:/";
         }

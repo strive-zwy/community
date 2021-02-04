@@ -11,6 +11,7 @@
     <script src="/jq/jquery_1.10.2_jquery.js"></script>
     <script src="/js/community.js"></script>
     <script src="/js/editormd.min.js"></script>
+    <script src="/js/editormd.amd.min.js"></script>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
 </head>
 <body>
@@ -40,6 +41,8 @@
                             path   : "/js/lib/",
                             delay  : 0,
                             watch  : false,
+                            taskList  : true,
+                            emoji  : true,
                             placeholder: "请输入问题描述",
                             imageUpload          : true,          // Enable/disable upload
                             imageFormats         : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
@@ -97,6 +100,7 @@
             • 问题补充: 详细补充您的问题内容，并确保问题描述清晰直观, 并提供一些相关的资料<br><br>
             • 选择标签: 选择一个或者多个合适的标签，用顿号隔开，每个标签不超过10个字<br>
         </div>
+        <div th:replace="~{navigation :: footer}"></div>
     </div>
 </div>
 

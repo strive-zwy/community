@@ -1,8 +1,17 @@
 package com.zwy.controller;
 
+import com.zwy.config.OSSClientUtil;
 import com.zwy.dto.FileDTO;
+import com.zwy.exception.CustomizeErrorCode;
+import com.zwy.exception.CustomizeException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @Author ：zwy
@@ -13,9 +22,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class FileController {
 
+    @Autowired
+    private OSSClientUtil ossClientUtil;
+
     @RequestMapping("/file/upload")
-    public FileDTO upload(){
-        return new FileDTO();
+    @ResponseBody
+    public FileDTO upload(HttpServletRequest request){
+        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+        MultipartFile file = multipartRequest.getFile("editormd-image-file");
+        if (file == null) throw new CustomizeException(CustomizeErrorCode.FILE_UPLOAD_FAIL);
+        String fileUrl = ossClientUtil.uploadImg2Oss(file);
+        FileDTO fileDTO = new FileDTO();
+        fileDTO.setSuccess(1);
+        fileDTO.setUrl(ossClientUtil.getImgUrl(fileUrl));
+        return fileDTO;
     }
 
 }

@@ -132,9 +132,11 @@
                 }
 
 				var fileInput  = dialog.find("[name=\"" + classPrefix + "image-file\"]");
+				console.log(fileInput);
 
 				fileInput.bind("change", function() {
 					var fileName  = fileInput.val();
+					console.log(fileName);
 					var isImage   = new RegExp("(\\.(" + settings.imageFormats.join("|") + "))$", "i"); // /(\.(webp|jpg|jpeg|gif|bmp|png))$/
 
 					if (fileName === "")
@@ -156,18 +158,23 @@
                     var submitHandler = function() {
 
                         var uploadIframe = document.getElementById(iframeName);
+                        console.log(uploadIframe);
 
                         uploadIframe.onload = function() {
 
                             loading(false);
 
                             /*var body = (uploadIframe.contentWindow ? uploadIframe.contentWindow : uploadIframe.contentDocument).document.body;
+                            console.log(body);
                             var json = (body.innerText) ? body.innerText : ( (body.textContent) ? body.textContent : null);
-                            */
+*/
                             var body = (uploadIframe.contentWindow ? uploadIframe.contentWindow : uploadIframe.contentDocument).document.body;
                             var jsonContainer = body.getElementsByTagName("pre")[0];
+                            console.log(jsonContainer);
                             var json = (jsonContainer.innerText) ? body.innerText : ( (body.textContent) ? body.textContent : null);
 
+
+                            console.log(json);
                             json = (typeof JSON.parse !== "undefined") ? JSON.parse(json) : eval("(" + json + ")");
 
                             if(!settings.crossDomainUpload)
