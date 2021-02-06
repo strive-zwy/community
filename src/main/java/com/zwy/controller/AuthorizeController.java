@@ -80,8 +80,14 @@ public class AuthorizeController {
         return "redirect:/";
     }
 
+    @GetMapping("/login")
+    public String login(HttpServletRequest request,
+                           HttpServletResponse response) {
+        return "login";
+    }
+
     @GetMapping("/logout")
-    public String callback(HttpServletRequest request,
+    public String logout(HttpServletRequest request,
                            HttpServletResponse response) {
     request.getSession().removeAttribute("user");
     Cookie c = new Cookie("token",null);

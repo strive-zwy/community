@@ -130,3 +130,14 @@ a.list-active{
 .tag_list_sty{
     cursor: pointer;
 }
+.login-btn{
+    width: 380px;
+}
+.login-form{
+    width: 350px;
+    margin: 150px auto;
+}
+#github-img{
+    width: 20px;
+    height: 20px;
+}

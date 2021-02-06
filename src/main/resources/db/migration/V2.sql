@@ -1,5 +1,3 @@
-USE `community`;
-
 /*Table structure for table `question` */
 
 DROP TABLE IF EXISTS `question`;

@@ -14,6 +14,10 @@ import org.apache.commons.logging.LogFactory;
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.model.ObjectMetadata;
 import com.aliyun.oss.model.PutObjectResult;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,17 +26,17 @@ import org.springframework.web.multipart.MultipartFile;
  * Created by wuming on 2018/2/6.
  */
 @Component
+@PropertySource("classpath:application.properties")
 public class OSSClientUtil {
 
+    @Autowired
+    private Environment env;
+
     private static final Log log = LogFactory.getLog(OSSClientUtil.class);
-    // endpoint以杭州为例，其它region请按实际情况填写 如：oss-cn-hangzhou.aliyuncs.com
     private String endpoint = "oss-cn-beijing.aliyuncs.com";
-    // accessKey
     private  String accessKeyId = "LTAI4GK95AhfKyxui78C1KkS";
     private  String accessKeySecret = "SLLLMMWYDxrDu29d4KKTkEfWRShbYO";
-    //空间
     private  String bucketName = "zwyz";
-    //文件存储目录
     private  String filedir = "community/publish/img/";
 
     private OSSClient ossClient;

@@ -48,7 +48,7 @@ public class ProfileController {
             PageDTO<NotificationDTO> notificationPage = notificationService.list(page,size,user.getId());
             model.addAttribute("notificationPage",notificationPage);
         }
-        return "/profile";
+        return "profile";
     }
 
 }

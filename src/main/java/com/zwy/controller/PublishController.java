@@ -33,8 +33,6 @@ public class PublishController {
     @Autowired
     private QuestionService questionService;
     @Autowired
-    private TagService tagService;
-    @Autowired
     private OSSClientUtil ossClientUtil;
 
     @GetMapping("/publish/{id}")
@@ -48,7 +46,7 @@ public class PublishController {
             model.addAttribute("id", id);
         }
         model.addAttribute("tagList", TagCache.get());
-        return "/publish";
+        return "publish";
     }
 
     @PostMapping("/doPublish/{id}")

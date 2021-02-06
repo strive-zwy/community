@@ -30,7 +30,8 @@ function postComm(questionId,type) {
                 if (response.code === 2003){
                     var isAccepted = confirm(response.message);
                     if (isAccepted){
-                        window.open("https://github.com/login/oauth/authorize?client_id=d85ef952e55a5e761214&redirect_uri=http://localhost:8080/callback&scope=user&state=1");
+                        // window.open("https://github.com/login/oauth/authorize?client_id=d85ef952e55a5e761214&redirect_uri=http://localhost:8080/callback&scope=user&state=1");
+                        window.open("https://github.com/login/oauth/authorize?client_id=d85ef952e55a5e761214&redirect_uri=http://114.215.208.150:8080/callback&scope=user&state=1");
                         window.localStorage.setItem("closable",true);
                     }
                 }else{

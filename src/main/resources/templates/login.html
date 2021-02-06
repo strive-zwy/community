@@ -1,41 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<!--suppress ALL-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>strive-zwy 登录</title>
+    <title>strive-登录</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/community.css">
+    <script src="/js/community.js"></script>
     <script src="/jq/jquery_1.10.2_jquery.js"></script>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
 </head>
 <body>
+<div th:replace="~{navigation :: nav}"></div>
+<div class="login-form">
 
-<div style="align-content: center;margin: auto">
     <form class="form-horizontal">
         <div class="form-group">
-            <label for="inputEmail3" class="col-sm-2 control-label">用户名</label>
-            <div class="col-sm-4">
-                <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+            <div style="text-align: center">
+                <h3>用户登录</h3>
             </div>
         </div>
         <div class="form-group">
-            <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
-            <div class="col-sm-4">
-                <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+            <div class="">
+                <input type="text" class="form-control" id="Username" placeholder="Username">
             </div>
         </div>
         <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox"> Remember me
-                    </label>
-                </div>
+            <div class="">
+                <input type="password" class="form-control" id="Password" placeholder="Password">
             </div>
         </div>
+
         <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-default">Sign in</button>
+            <button type="submit" class="btn login-btn btn-default">登 录</button>
+        </div>
+        <div class="form-group">
+            <div class="text-center">
+                <label>
+                    <a href="https://github.com/login/oauth/authorize?client_id=ae08bb7288c532dbaf78
+                &redirect_uri=http://localhost:8080/callback&scope=user&state=1">
+                        <img id="github-img" src="https://github.githubassets.com/favicons/favicon.png">
+                        Github 登录
+                    </a>
+                </label>
             </div>
         </div>
     </form>

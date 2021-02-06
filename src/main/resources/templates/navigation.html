@@ -41,8 +41,11 @@
                         </ul>
                     </li>
                     <li th:if="${session.user == null}">
-                        <a href="https://github.com/login/oauth/authorize?client_id=d85ef952e55a5e761214
-                &redirect_uri=http://localhost:8080/callback&scope=user&state=1">登 录</a>
+                        <a href="/login">登 录</a>
+                        <!--<a href="https://github.com/login/oauth/authorize?client_id=ae08bb7288c532dbaf78
+                &redirect_uri=http://localhost:8080/callback&scope=user&state=1">登 录</a>-->
+                        <!--<a href="https://github.com/login/oauth/authorize?client_id=d85ef952e55a5e761214
+                &redirect_uri=http://114.215.208.150:8080/callback&scope=user&state=1">登 录</a>-->
                     </li>
                 </ul>
             </form>
