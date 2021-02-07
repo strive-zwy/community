@@ -121,11 +121,11 @@ a.list-active{
 }
 .likeList{
     font-size: 20px;
-    color: #2aabd2;
+    color: #8f8f8f;
 }
 .likeList:focus,.likeList:hover{
     font-size: 22px;
-    color: #8f8f8f;
+    color: #2aabd2;
 }
 .tag_list_sty{
     cursor: pointer;

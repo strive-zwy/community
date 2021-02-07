@@ -39,7 +39,7 @@ public class ProfileController {
         if ("question".equals(action)){
             model.addAttribute("section" , "question");
             model.addAttribute("sectionName" , "我的提问");
-            PageDTO<QuestionDTO> questionPage = questionService.list("",page,size,user.getId());
+            PageDTO<QuestionDTO> questionPage = questionService.list("","",page,size,user.getId());
             model.addAttribute("questionPage",questionPage);
         }
         if ("replies".equals(action)){

@@ -12,6 +12,7 @@ import lombok.Data;
 public class SearchDTO {
 
     private String search;
+    private String tag;
     private Integer offset;
     private Integer size;
 }

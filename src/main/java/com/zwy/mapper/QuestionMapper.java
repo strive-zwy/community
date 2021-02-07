@@ -47,10 +47,24 @@ public interface QuestionMapper {
     @Select("select * from question order by  comment_Count desc limit 8")
     List<Question> findHotList();
 
-    @Select("select * from question WHERE title like '%${search}%' or description like '%${search}%' " +
-            "order by comment_Count desc limit #{offset},#{size}")
+    @Select("select * from question WHERE title REGEXP #{search}  " +
+            "  order by comment_Count desc limit #{offset},#{size}")
     List<Question> searchList(SearchDTO searchDTO);
 
-    @Select("select count(1) from question WHERE title like '%${_parameter}%' or description like '%${_parameter}%' ")
+    @Select("select count(1) from question WHERE title REGEXP #{search}  ")
     Integer searchCount(String search);
+
+    @Select("select * from question WHERE title REGEXP #{search}  " +
+            " OR tag REGEXP #{tag} order by comment_Count desc limit #{offset},#{size}")
+    List<Question> searchTagList(SearchDTO searchDTO);
+
+    @Select("select count(1) from question WHERE title REGEXP #{search}  " +
+            " OR tag REGEXP #{tag}")
+    Integer searchTagCount(String search);
+
+    @Select("select count(1) from question WHERE tag REGEXP #{tag}")
+    Integer tagCount(String tag);
+
+    @Select("select * from question WHERE tag REGEXP #{tag} order by comment_Count desc limit #{offset},#{size}")
+    List<Question> tagList(String tag, Integer offset, Integer size);
 }

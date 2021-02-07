@@ -32,21 +32,32 @@ public class QuestionService {
     private QuestionMapper questionMapper;
 
 
-    public PageDTO<QuestionDTO> list(String search, Integer page, Integer size , Long userId) {
+    public PageDTO<QuestionDTO> list(String search,String tag, Integer page, Integer size , Long userId) {
         Integer offset = size * (page - 1);
         List<Question> list;
         Integer totleCount;
+        SearchDTO searchDTO = new SearchDTO();
         if (userId == 0){
             if (StringUtils.isNotBlank(search)){
-                totleCount = questionMapper.searchCount(search);
-                SearchDTO searchDTO = new SearchDTO();
                 searchDTO.setOffset(offset);
                 searchDTO.setSearch(search);
                 searchDTO.setSize(size);
-                list = questionMapper.searchList(searchDTO);
+                if (StringUtils.isNotBlank(tag)){
+                    searchDTO.setTag(tag);
+                    totleCount = questionMapper.searchTagCount(search);
+                    list = questionMapper.searchTagList(searchDTO);
+                }else{
+                    totleCount = questionMapper.searchCount(search);
+                    list = questionMapper.searchList(searchDTO);
+                }
             }else{
-                list = questionMapper.list(offset,size);
-                totleCount = questionMapper.count();
+                if (StringUtils.isNotBlank(tag)){
+                    totleCount = questionMapper.tagCount(tag);
+                    list = questionMapper.tagList(tag,offset,size);
+                }else{
+                    list = questionMapper.list(offset,size);
+                    totleCount = questionMapper.count();
+                }
             }
         }else{
             list = questionMapper.listByCreator(userId,offset,size);
