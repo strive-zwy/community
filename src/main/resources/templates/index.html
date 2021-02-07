@@ -68,7 +68,7 @@
             </div>-->
             <ul>
                 <li th:each="tag : ${tags}">
-                    <a class="likeList" th:href="@{/(page=1,search =${searchkw},tag=${tag})}" th:text="${tag}"></a>
+                    <a class="likeList" th:href="@{/(page=1,tag=${tag})}" th:text="${tag}"></a>
                 </li>
             </ul>
         </div>
