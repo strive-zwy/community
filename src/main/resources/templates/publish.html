@@ -42,7 +42,7 @@
                             delay  : 0,
                             watch  : false,
                             taskList  : true,
-                            emoji  : true,
+                            emoji  : false,
                             placeholder: "请输入问题描述",
                             imageUpload          : true,          // Enable/disable upload
                             imageFormats         : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
@@ -83,11 +83,13 @@
 
                 <div class="container-fluid main">
                     <div class="row">
-                        <div class="alert alert-danger col-lg-9 col-md-12 col-sm-12 col-xs-12" th:text="${error}"
+                        <div class="alert alert-danger alert-dismissible col-lg-7 col-md-12 col-sm-12 col-xs-12"
                              th:if="${error != null}">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <span  th:text="${error}"></span>
                         </div>
-                        <div class="btn-publish">
-                            <button type="submit" class="btn btn-success btn-lg">发&nbsp;&nbsp;布</button>
+                        <div class="btn-publish ">
+                            <button type="submit" class=" btn btn-success btn-lg">发&nbsp;&nbsp;布</button>
                         </div>
                     </div>
                 </div>

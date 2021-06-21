@@ -8,9 +8,9 @@
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                         data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">strive-zwy 社区</span>
+                    <span class="sr-only">CODE-社区</span>
                 </button>
-                <a class="navbar-brand" href="/">strive-zwy 社区</a>
+                <a class="navbar-brand" href="/">CODE-社区</a>
             </div>
 
             <form action="/" class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -39,6 +39,9 @@
                             <li><a href="/profile/question">我的问题</a></li>
                             <li><a href="/logout">退出登录</a></li>
                         </ul>
+                    </li>
+                    <li th:if="${session.user == null}">
+                        <a href="/register">注 册</a>
                     </li>
                     <li th:if="${session.user == null}">
                         <a href="/login">登 录</a>

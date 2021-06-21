@@ -11,11 +11,10 @@
     <script src="/jq/jquery_1.10.2_jquery.js"></script>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
 </head>
-<body>
+<body id="bg_img">
 <div th:replace="~{navigation :: nav}"></div>
 <div class="login-form">
-
-    <form class="form-horizontal">
+    <form class="form-horizontal" action="/doLogin" method="post">
         <div class="form-group">
             <div style="text-align: center">
                 <h3>用户登录</h3>
@@ -23,24 +22,24 @@
         </div>
         <div class="form-group">
             <div class="">
-                <input type="text" class="form-control" id="Username" placeholder="Username">
+                <input type="text" class="form-control" name="name" id="name" placeholder="Username">
             </div>
         </div>
         <div class="form-group">
             <div class="">
-                <input type="password" class="form-control" id="Password" placeholder="Password">
+                <input type="password" class="form-control" name="password" id="password" placeholder="Password">
             </div>
         </div>
 
         <div class="form-group">
             <button type="submit" class="btn login-btn btn-default">登 录</button>
         </div>
+
         <div class="form-group">
             <div class="text-center">
                 <label>
                     <!--本地 url-->
-                    <a href="https://github.com/login/oauth/authorize?client_id=ae08bb7288c532dbaf78
-                &redirect_uri=http://localhost:8080/callback&scope=user&state=1">
+                    <a href="https://github.com/login/oauth/authorize?client_id=ee2baad76d783d0cb698&redirect_uri=http://localhost:8080/callback&scope=user&state=1">
                         <img id="github-img" src="https://github.githubassets.com/favicons/favicon.png">
                         Github 登录
                     </a>
@@ -53,7 +52,14 @@
                 </label>
             </div>
         </div>
+        <div class="alert alert-danger alert-dismissible col-lg-offset-2 col-lg-7 col-md-12 col-sm-12 col-xs-12"
+             th:if="${error != null}">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <span  th:text="${error}"></span>
+        </div>
     </form>
 </div>
+<div class="loginbg"></div>
+
 </body>
 </html>
