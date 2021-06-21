@@ -3,7 +3,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>strive-登录</title>
+    <title>CODE-注册</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="/css/community.css">
@@ -41,7 +41,7 @@
         <div class="form-group">
             <label for="bio" class="col-lg-4 control-label">简 介</label>
             <div class="col-lg-8">
-                <textarea name="bio" id="bio" class="form-control input-lg" rows="3" th:value="${bio}"></textarea>
+                <textarea name="bio" id="bio" class="form-control input-lg" rows="3" th:text="${bio}"></textarea>
             </div>
         </div>
         <div class="alert alert-danger alert-dismissible col-lg-offset-4 col-lg-7 col-md-12 col-sm-12 col-xs-12"

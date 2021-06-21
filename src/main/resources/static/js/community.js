@@ -30,8 +30,8 @@ function postComm(questionId,type) {
                 if (response.code === 2003){
                     var isAccepted = confirm(response.message);
                     if (isAccepted){
-                        // window.open("https://github.com/login/oauth/authorize?client_id=d85ef952e55a5e761214&redirect_uri=http://localhost:8080/callback&scope=user&state=1");
-                        window.open("https://github.com/login/oauth/authorize?client_id=d85ef952e55a5e761214&redirect_uri=http://114.215.208.150:8080/callback&scope=user&state=1");
+                        window.open("https://github.com/login/oauth/authorize?client_id=ae08bb7288c532dbaf78&redirect_uri=http://localhost:8080/callback&scope=user&state=1");
+                        // window.open("https://github.com/login/oauth/authorize?client_id=d85ef952e55a5e761214&redirect_uri=http://114.215.208.150:8080/callback&scope=user&state=1");
                         window.localStorage.setItem("closable",true);
                     }
                 }else{
@@ -39,6 +39,32 @@ function postComm(questionId,type) {
                 }
             }
             console.log(response);
+        }
+    });
+}
+
+function updateSelf() {
+    var name = $("#username").val();
+    var id = $("#id").val();
+    var bio = $("#bio").val();
+    $.ajax({
+        type : "POST",
+        dataType : "json",
+        url : "/updateSelf",
+        contentType : "application/json",
+        data : JSON.stringify({
+            "id" : id,
+            "name" : name,
+            "bio" : bio
+        }),
+        success:function (response) {
+            console.log(response);
+            if (response.code === 200){
+                commonUtil.message("保存成功！");
+                // alert(response.message);
+            }else {
+                commonUtil.message("保存失败！","danger");
+            }
         }
     });
 }
@@ -96,8 +122,8 @@ var commonUtil = {
         var divElement = $("<div></div>").addClass('alert').addClass('alert-'+type).addClass('alert-dismissible').addClass('col-md-4').addClass('col-md-offset-4');
         divElement.css({ // 消息框的定位样式
             "position": "absolute",
-            "top": "100px",
-            "left":"30%"
+            "top": "200px",
+            "left":"0"
         });
         divElement.text(msg); // 设置消息框的内容
         // 消息框添加可以关闭按钮

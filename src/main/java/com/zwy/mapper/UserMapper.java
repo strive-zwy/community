@@ -19,6 +19,12 @@ public interface UserMapper {
     @Update("update user set token = #{token},gmt_modified = #{gmtModified} where  id = #{id}")
     void update(User user);
 
+    @Update("update user set name = #{name},bio = #{bio},gmt_modified = #{gmtModified} where  id = #{id}")
+    int updateSelf(User user);
+
+    @Update("update user set avatar_url = #{avatarUrl},gmt_modified = #{gmtModified} where  id = #{id}")
+    void updateAvatarUrl(User user);
+
     @Select("select * from user where token = #{token}")
     User findByToken(@Param("token") String token);
 

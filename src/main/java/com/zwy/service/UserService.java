@@ -35,6 +35,14 @@ public class UserService {
         userMapper.insert(user);
     }
 
+    public int updateSelf(User user) {
+        return userMapper.updateSelf(user);
+    }
+
+    public void updateAvatarUrl(User user) {
+        userMapper.updateAvatarUrl(user);
+    }
+
     public User findById(Long commentator) {
         return userMapper.findById(commentator);
     }
@@ -44,7 +52,6 @@ public class UserService {
     }
 
     public User findByName(String name) {
-
         return userMapper.getUserByUsername(name);
     }
 }

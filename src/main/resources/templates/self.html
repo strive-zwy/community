@@ -16,7 +16,7 @@
 <body id="bg_img">
 <div th:replace="~{navigation :: nav}"></div>
 <div class="reg-form  col-lg-5 col-md-12 col-sm-12 col-xs-12 ">
-    <form class="form-horizontal"  action="/doRegister" method="post">
+    <form class="form-horizontal">
         <div class="form-group">
             <div class="col-lg-offset-6 col-lg-12">
                 <h3>个人中心</h3>
@@ -25,6 +25,7 @@
         <div class="form-group">
             <label for="username" class=" col-lg-4 control-label">用户名</label>
             <div class="col-lg-8">
+                <input hidden type="text" name="id" id="id"  th:value="${session.user.getId()}">
                 <input type="text" name="name" class="form-control input-lg" id="username" th:value="${session.user.getName()}">
             </div>
         </div>
@@ -60,7 +61,7 @@
         </div>
         <div class="form-group">
             <div class="control-label col-lg-offset-4 col-lg-9">
-                <button type="submit" class="col-lg-9 btn-lg btn-info">保存修改</button>
+                <button type="button" onclick="javascript:updateSelf()" class="col-lg-9 btn-lg btn-info">保存修改</button>
             </div>
         </div>
     </form>
@@ -77,6 +78,7 @@
                 <form class="form-horizontal required-validate" action="/file/imgUpload" enctype="multipart/form-data" method="post" οnsubmit="return iframeCallback(this, pageAjaxDone)">
                     <div class="form-group">
                         <div class="col-md-offset-1 col-md-10 tl th">
+                            <input hidden="hidden" type="text" name="id"  th:value="${session.user.getId()}" />
                             <input type="file" name="image" class="projectfile" th:value="${session.user.getAvatarUrl()}" />
                             <p class="help-block">支持jpg、jpeg、png、gif格式，大小不超过2.0M</p>
                         </div>
@@ -117,6 +119,25 @@ var projectfileoptions = {
             $(this).fileinput(projectfileoptions);
         }
     });
+
+function pageAjaxDone(json) {
+    console.log(json);
+    alert(json);
+    /*YUNM.debug(json);
+    YUNM.ajaxDone(json);
+
+    if (json[YUNM.keys.statusCode] == YUNM.statusCode.ok) {
+        var msg = json[YUNM.keys.message];
+        // 弹出消息提示
+        YUNM.debug(msg);
+        if (YUNM.callbackType.confirmTimeoutForward == json.callbackType) {
+            $.showSuccessTimeout(msg, function() {
+                window.location = json.forwardUrl;
+            });
+        }
+    }*/
+}
+
 
 </script>
 </body>

@@ -3,6 +3,7 @@ package com.zwy.controller;
 import com.zwy.config.SaltUtils;
 import com.zwy.dto.AccessTokenDTO;
 import com.zwy.dto.GithubUser;
+import com.zwy.dto.MsgDTO;
 import com.zwy.exception.CustomizeErrorCode;
 import com.zwy.exception.CustomizeException;
 import com.zwy.model.User;
@@ -18,13 +19,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -166,6 +167,26 @@ public class AuthorizeController {
     public String self(HttpServletRequest request,
                            HttpServletResponse response) {
         return "self";
+    }
+    @RequestMapping(value = "/updateSelf" ,method = RequestMethod.POST)
+    @ResponseBody
+    public Object updateSelf(HttpServletRequest request,
+                             HttpServletResponse response,
+                              @RequestBody MsgDTO msgDTO) {
+        User user = userService.findById(msgDTO.getId());
+        user.setName(msgDTO.getName());
+        user.setBio(msgDTO.getBio());
+        user.setGmtModified(System.currentTimeMillis());
+        int i = userService.updateSelf(user);
+        Map<Object,Object> map = new HashMap<>();
+        if (i > 0) {
+            map.put("code",200);
+            map.put("message","成功");
+        }else {
+            map.put("code",0);
+            map.put("message","失败");
+        }
+        return map;
     }
 
     @GetMapping("/logout")
