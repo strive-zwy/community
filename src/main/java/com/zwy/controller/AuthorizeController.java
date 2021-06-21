@@ -162,6 +162,11 @@ public class AuthorizeController {
                            HttpServletResponse response) {
         return "register";
     }
+    @GetMapping("/self")
+    public String self(HttpServletRequest request,
+                           HttpServletResponse response) {
+        return "self";
+    }
 
     @GetMapping("/logout")
     public String logout(HttpServletRequest request,

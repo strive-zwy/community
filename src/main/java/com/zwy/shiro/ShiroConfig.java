@@ -54,7 +54,9 @@ public class ShiroConfig {
         //定义拦截路径,记得将静态资源也排除过滤
         //进行权限的控制,必须使用LinkHashMap,shrio要按照顺序进行设置
         Map<String, String> authMap = new LinkedHashMap<>();
-        authMap.put("/static/**", "anon");
+        authMap.put("/static/**/**", "anon");
+//        authMap.put("/static/css/**", "anon");
+//        authMap.put("/static/js/file/**", "anon");
 //        authMap.put("/user/**", "client,roles[user]");
 //        authMap.put("/admin/**", "client,roles[admin]");
         authMap.put("/login", "anon");

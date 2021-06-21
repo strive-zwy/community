@@ -1,5 +1,7 @@
 body{
     background-color: #efefef;
+    /*background: url(https://zwyz.oss-cn-beijing.aliyuncs.com/community/publish/img/2.jpg?Expires=1615063795&OSSAccessKeyId=TMP.3KdYNqVY5PavfKVfRDyGgXD37a1QYXbNKBSTWLexE3pYa2dUJGPSWuhX6wJTbAKPCzqBQHMZ4FGjVzEh7PftJMzPyanWpb&Signature=1k8n4PZmhUmodBr6PXRrxzJLqu8%3D);*/
+    /*background-attachment : fixed;*/
 }
 a{
     color:#666666;
@@ -10,8 +12,8 @@ a:focus, a:hover {
     text-decoration: none;
 }
 .main{
-    background-color: white;
-    margin: 30px 80px 0 80px;
+    background-color: rgb(255, 255, 255);
+    margin: 20px 80px 0 80px;
 }
 .btn-publish{
     float: right;
@@ -136,8 +138,45 @@ a.list-active{
 .login-form{
     width: 350px;
     margin: 150px auto;
+    z-index: 100;
+    color: #000000;
+}
+.reg-form{
+    /*width: 550px;
+    margin: 150px auto;
+    z-index: 100;
+    color: #000000;*/
+    background-color: rgb(255, 255, 255);
+    padding: 20px 110px 50px 0;
+    margin: 20px 160px 0 400px;
+    border-radius: 20px;
 }
 #github-img{
     width: 20px;
     height: 20px;
+}
+.loginbg{
+    width: 500px;
+    height: 350px;
+    background-color: #FFFFFF;
+    position: relative;
+    top: -425px;
+    left: 510px;
+    z-index: -1;
+    border-radius: 20px;
+}
+
+.regbg{
+    width: 600px;
+    height: 350px;
+    background-color: #FFFFFF;
+    position: relative;
+    top: -425px;
+    left: 480px;
+    z-index: -1;
+    border-radius: 20px;
+}
+#userAvatar{
+    width: 80px;
+    height: 80px;
 }

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<!--suppress ALL-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>strive-个人中心</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/community.css">
+    <link rel="stylesheet" href="/css/fileinput.css">
+    <script src="/js/community.js"></script>
+    <script src="/jq/jquery_1.10.2_jquery.js"></script>
+    <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+    <script src="/js/file/fileinput.js" type="application/javascript"></script>
+</head>
+<body id="bg_img">
+<div th:replace="~{navigation :: nav}"></div>
+<div class="reg-form  col-lg-5 col-md-12 col-sm-12 col-xs-12 ">
+    <form class="form-horizontal"  action="/doRegister" method="post">
+        <div class="form-group">
+            <div class="col-lg-offset-6 col-lg-12">
+                <h3>个人中心</h3>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="username" class=" col-lg-4 control-label">用户名</label>
+            <div class="col-lg-8">
+                <input type="text" name="name" class="form-control input-lg" id="username" th:value="${session.user.getName()}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="username" class=" col-lg-4 control-label">头像</label>
+            <div class="col-lg-8">
+                <img class="img-thumbnail" id="userAvatar" th:src="${session.user.getAvatarUrl()}">
+                <input class="btn btn-default" value="点击更换头像" data-toggle="modal" data-target="#myModal"></input>
+            </div>
+        </div>
+        <!--<div class="form-group">
+            <label for="password" class="col-lg-4 control-label">密码</label>
+            <div class="col-lg-8">
+                <input type="password" name="password" class="form-control input-lg" id="password" th:value="${password}" >
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="pwd" class="col-lg-4 control-label">确认密码</label>
+            <div class="col-lg-8">
+                <input type="password" name="pwd" class="form-control input-lg" id="pwd" th:value="${pwd}">
+            </div>
+        </div>-->
+        <div class="form-group">
+            <label for="bio" class="col-lg-4 control-label">简 介</label>
+            <div class="col-lg-8">
+                <textarea name="bio" id="bio" class="form-control input-lg" rows="3" th:text="${session.user.getBio()}"></textarea>
+            </div>
+        </div>
+        <div class="alert alert-danger alert-dismissible col-lg-offset-4 col-lg-7 col-md-12 col-sm-12 col-xs-12"
+             th:if="${error != null}">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <span  th:text="${error}"></span>
+        </div>
+        <div class="form-group">
+            <div class="control-label col-lg-offset-4 col-lg-9">
+                <button type="submit" class="col-lg-9 btn-lg btn-info">保存修改</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="regbg"></div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">更换头像</h4>
+            </div>
+                <form class="form-horizontal required-validate" action="/file/imgUpload" enctype="multipart/form-data" method="post" οnsubmit="return iframeCallback(this, pageAjaxDone)">
+                    <div class="form-group">
+                        <div class="col-md-offset-1 col-md-10 tl th">
+                            <input type="file" name="image" class="projectfile" th:value="${session.user.getAvatarUrl()}" />
+                            <p class="help-block">支持jpg、jpeg、png、gif格式，大小不超过2.0M</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="submit" class="btn btn-primary">保存设置</button>
+                    </div>
+                </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script>
+
+$('#myModal').on('shown.bs.modal', function () {
+    $('#myInput').focus()
+});
+var projectfileoptions = {
+        showUpload : false,
+        showRemove : false,
+        language : 'zh',
+        allowedPreviewTypes : [ 'image' ],
+        allowedFileExtensions : [ 'jpg', 'png', 'gif' ],
+        maxFileSize : 2000,
+};
+
+    $('input[class=projectfile]').each(function() {
+        var imageurl = $(this).attr("value");
+        if (imageurl) {
+            var op = $.extend({
+                initialPreview : [ // 预览图片的设置
+                    "<img src='" + imageurl + "' class='file-preview-image'>", ]
+            }, projectfileoptions);
+
+            $(this).fileinput(op);
+        } else {
+            $(this).fileinput(projectfileoptions);
+        }
+    });
+
+</script>
+</body>
+</html>
