@@ -11,6 +11,9 @@ import lombok.Data;
 @Data
 public class User {
 
+    public static final int LOGIN_TYPE_USER = 0;
+    public static final int LOGIN_TYPE_GITHUB = 1;
+
     private Long id;
     private String name;
     private String bio;
@@ -19,4 +22,6 @@ public class User {
     private Long gmtCreate;
     private Long gmtModified;
     private String avatarUrl;
+    private int loginType;
+    private String password;
 }

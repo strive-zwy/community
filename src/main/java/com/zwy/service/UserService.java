@@ -30,11 +30,21 @@ public class UserService {
         }
     }
 
+
+    public void insert(User user) {
+        userMapper.insert(user);
+    }
+
     public User findById(Long commentator) {
         return userMapper.findById(commentator);
     }
 
     public User findByAccoundId(String id) {
         return userMapper.findByAccount(id);
+    }
+
+    public User findByName(String name) {
+
+        return userMapper.getUserByUsername(name);
     }
 }
