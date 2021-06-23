@@ -30,12 +30,12 @@ function postComm(questionId,type) {
                 if (response.code === 2003){
                     var isAccepted = confirm(response.message);
                     if (isAccepted){
-                        window.open("https://github.com/login/oauth/authorize?client_id=ae08bb7288c532dbaf78&redirect_uri=http://localhost:8080/callback&scope=user&state=1");
-                        // window.open("https://github.com/login/oauth/authorize?client_id=d85ef952e55a5e761214&redirect_uri=http://114.215.208.150:8080/callback&scope=user&state=1");
-                        window.localStorage.setItem("closable",true);
+                        setTimeout(function () {
+                            window.location.href="/login";
+                        },2500)
                     }
                 }else{
-                    alert(response.message)
+                    commonUtil.message(response.message);
                 }
             }
             console.log(response);
@@ -69,8 +69,38 @@ function updateSelf() {
     });
 }
 
-function like(cId) {
-    console.log(cId);
+function like(outerId, type) {
+    $.ajax({
+        type : "POST",
+        dataType : "json",
+        url : "/like",
+        contentType : "application/json",
+        data : JSON.stringify({
+            "outerId" : outerId,
+            "type" : type
+        }),
+        success:function (response) {
+            console.log(response);
+            if (response.code === 2002){
+                commonUtil.message(response.message);
+                setTimeout(function () {
+                    window.location.reload();
+                },1500)
+            }else if (response.code === 2001){
+                commonUtil.message(response.message,"info");
+                setTimeout(function () {
+                    window.location.reload();
+                },1500)
+            }else if (response.code === 2003){
+                commonUtil.message("点赞失败,需要登录","danger");
+                setTimeout(function () {
+                    window.location.href="/login";
+                },2500)
+            }else {
+                commonUtil.message("点赞失败","danger");
+            }
+        }
+    });
 
 }
 
@@ -121,7 +151,7 @@ var commonUtil = {
         // 创建bootstrap的alert元素
         var divElement = $("<div></div>").addClass('alert').addClass('alert-'+type).addClass('alert-dismissible').addClass('col-md-4').addClass('col-md-offset-4');
         divElement.css({ // 消息框的定位样式
-            "position": "absolute",
+            "position": "fixed",
             "top": "200px",
             "left":"0"
         });

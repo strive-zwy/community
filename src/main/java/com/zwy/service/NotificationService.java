@@ -44,7 +44,7 @@ public class NotificationService {
             NotificationDTO d = new NotificationDTO();
             BeanUtils.copyProperties(n,d);
             d.setNotifierName(userMapper.findById(n.getNotifier()).getName());
-            if (n.getType() == 1){
+            if (n.getType() == 1 || n.getType() == 3 || n.getType() == 5){
                 d.setOuterTile(questionMapper.findById(n.getOuterId()).getTitle());
             }else{
                 d.setOuterId(commentMapper.selectByPrimaryKey(n.getOuterId()).getParentId());

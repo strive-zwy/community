@@ -32,10 +32,18 @@
                     编辑
                 </span>
             </a>
+            <span style="float: right;">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <a th:onclick="'javascript:like('+${question.id}+',1);'" style="float: right;cursor: pointer">
+                <span style="float: right;font-size: 18px">
+                    <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+                    点赞
+                </span>
+            </a>
             <span class="text-desc">
                 作者：<span th:text="${question.user.name}"></span> |
                 发布时间：<span th:text="${#dates.format(question.gmtCreate,'yyyy MMMM dd')}"></span> |
-                阅读数：<span th:text="${question.viewCount}"></span>
+                阅读数：<span th:text="${question.viewCount}"></span> |
+                点赞数：<span th:text="${question.likeCount}"></span>
             </span>
             <hr>
             <!--内容-->
@@ -73,7 +81,7 @@
                         <span th:text="${comm.content}"></span>
                         <br>
                         <div class="comm_font">
-                            <span onclick="like(/${comm.id}/)" th:id="${comm.id}+'_icon_left'" class="comm_icon_left comm_icon glyphicon glyphicon-thumbs-up">
+                            <span th:onclick="'javascript:like('+${comm.id}+',2);'" th:id="${comm.id}+'_icon_left'" class="comm_icon_left comm_icon glyphicon glyphicon-thumbs-up">
                                 <span class="comm_badge" th:text="${comm.likeCount}"></span>
                             </span><span value="show"  th:onclick="'javascript:isShow('+${comm.id}+');'" th:id="${comm.id}+'_icon_right'" class="comm_icon_right comm_icon glyphicon glyphicon-comment">
                             <span class="comm_badge" th:text="${comm.commList.size}"></span>
@@ -98,7 +106,7 @@
                                     <br>
                                 </div>
                                 <div class="comm_font">
-                            <span onclick="like();" class="comm_comm_like comm_icon glyphicon glyphicon-thumbs-up">
+                            <span th:onclick="'javascript:like('+${commSon.id}+',2);'" class="comm_comm_like comm_icon glyphicon glyphicon-thumbs-up">
                                 <span class="comm_comm_badge" th:text="${commSon.likeCount}"></span>
                             </span>
                                     <span class="pull-right" th:text="${#dates.format(commSon.gmtCreate,'yyyy-MM-dd')}"></span>

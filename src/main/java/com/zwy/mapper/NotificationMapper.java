@@ -1,10 +1,7 @@
 package com.zwy.mapper;
 
 import com.zwy.model.Notification;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 @Mapper
@@ -23,6 +20,8 @@ public interface NotificationMapper {
      *
      * @mbg.generated Mon Feb 01 13:25:11 CST 2021
      */
+    @Insert("insert into notification ( notifier, receiver, outerId, type, gmt_create, status) " +
+            "values (#{notifier} ,#{receiver}, #{outerId},#{type},#{gmtCreate},#{status})")
     int insert(Notification record);
 
     /**

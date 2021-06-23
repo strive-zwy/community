@@ -34,6 +34,10 @@ public interface QuestionMapper {
             "gmt_modified = #{gmtModified} where  id = #{id}")
     int update(Question q);
 
+    @Update("update question set like_count = #{likeCount} ," +
+            "gmt_modified = #{gmtModified} where  id = #{id}")
+    int updateLike(Question q);
+
     @Update("update question set view_Count = view_Count + 1 where  id = #{id}")
     void addViewCount(Long id);
 

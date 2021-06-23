@@ -51,7 +51,7 @@ public class HotTagTasks {
                 offset += size;
             }
             hotTagCache.updateTags(priorities);
-            log.info("hotTagSchedile stop {}",dateFormat.format(new Date()));
         }
+        log.info("hotTagSchedile stop {}",dateFormat.format(new Date()));
     }
 }
