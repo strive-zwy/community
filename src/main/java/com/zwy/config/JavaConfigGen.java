@@ -52,7 +52,7 @@ public class JavaConfigGen {
         GeneratedKey generatedKey = new GeneratedKey("id", "MySql", false, "pre");
 
         TableConfiguration t1 = new TableConfiguration(context);
-        t1.setTableName("notification");
+        t1.setTableName("likeLog");
         t1.setGeneratedKey(generatedKey);
         t1.setUpdateByPrimaryKeyStatementEnabled(true);
         context.addTableConfiguration(t1);

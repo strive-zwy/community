@@ -33,11 +33,11 @@ public class OSSClientUtil {
     private Environment env;
 
     private static final Log log = LogFactory.getLog(OSSClientUtil.class);
-    private String endpoint = "";
-    private  String accessKeyId = "";
-    private  String accessKeySecret = "";
-    private  String bucketName = "";
-    private  String filedir = "";
+    private String endpoint = "oss-cn-beijing.aliyuncs.com";
+    private  String accessKeyId = "LTAI4GK95AhfKyxui78C1KkS";
+    private  String accessKeySecret = "SLLLMMWYDxrDu29d4KKTkEfWRShbYO";
+    private  String bucketName = "zwyz";
+    private  String filedir = "community/publish/img/";
 
     private OSSClient ossClient;
 
